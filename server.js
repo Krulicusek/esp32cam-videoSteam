@@ -34,4 +34,4 @@ wss.on('connection', (ws, req)=>{
 });
 
 
-server.listen(process.env.port || HTTP_PORT, ()=> console.log(`HTTP server listening at ${process.env.PORT || HTTP_PORT}`));
+server.listen(process.env.PORT || HTTP_PORT, ()=> console.log(`HTTP server listening at ${process.env.PORT || HTTP_PORT}`));
