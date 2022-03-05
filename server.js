@@ -6,7 +6,7 @@ const app = express();
 const WS_PORT  = 8888;
 const HTTP_PORT = 8000;
 
-const wsServer = new WebSocket.Server({port: WS_PORT}, ()=> console.log(`WS Server is listening at ${WS_PORT}`));
+const wsServer = new WebSocket.Server({port: process.env.port || WS_PORT} , ()=> console.log(`WS Server is listening at ${process.env.port || WS_PORT}`));
 
 let connectedClients = [];
 wsServer.on('connection', (ws, req)=>{
@@ -25,4 +25,4 @@ wsServer.on('connection', (ws, req)=>{
 });
 
 app.get('/client',(req,res)=>res.sendFile(path.resolve(__dirname, './client.html')));
-app.listen(HTTP_PORT, ()=> console.log(`HTTP server listening at ${HTTP_PORT}`));
+app.listen(process.env.port || HTTP_PORT, ()=> console.log(`HTTP server listening at ${process.env.port || HTTP_PORT}`));
