@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const basicAuth = require('express-basic-auth');
+var auth = require('basic-auth')
 const WebSocket = require("ws");
 let server = require('http').createServer();
 //var reconnect = require('reconnect-ws');
@@ -25,9 +26,17 @@ app.use(express.json);
 //       res.send('hello world')
 //       // or call next() if you use it as middleware (as snippet #1)
 //     });
-app.use(basicAuth({
-    users: { admin: 'supersecret123' },
-}));
+app.use(function(req, res, next) {
+    var user = auth(req);
+
+    if (user === undefined || user['name'] !== 'admin' || user['pass'] !== 'metalika554') {
+        res.statusCode = 401;
+        res.setHeader('WWW-Authenticate', 'Basic realm="MyRealmName"');
+        res.end('Unauthorized');
+    } else {
+        next();
+    }
+});
 app.get('/client', (req, res) => res.sendFile(path.resolve(__dirname, './client.html')));
 server.on('request', app);
 let connectedClients = [];
