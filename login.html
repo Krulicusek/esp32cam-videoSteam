@@ -1,0 +1,92 @@
+<head> <style>
+  * {
+    box-sizing: border-box;
+    }
+    
+    *:focus {
+        outline: none;
+    }
+    body {
+    font-family: Arial;
+    background-color: #333;
+    padding: 50px;
+    }
+    .login {
+    margin: 20px auto;
+    width: 300px;
+    }
+    .login-screen {
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 5px
+    }
+    
+    .app-title {
+    text-align: center;
+    color: #777;
+    }
+    
+    .login-form {
+    text-align: center;
+    }
+    .form-control {
+    margin-bottom: 10px;
+    }
+    
+    input {
+    text-align: center;
+    background-color: #ECF0F1;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 0;
+    width: 250px;
+    transition: border .5s;
+    }
+    
+    input:focus {
+    border: 2px solid #0fac43;
+    box-shadow: none;
+    }
+    
+    .btn {
+      border: 2px solid transparent;
+      background: #0fac43;
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 25px;
+      padding: 10px 0;
+      text-decoration: none;
+      text-shadow: none;
+      border-radius: 3px;
+      box-shadow: none;
+      transition: 0.25s;
+      display: block;
+      width: 250px;
+      margin: 0;
+    }
+    
+    .btn:hover {
+      background-color:  #047c2c;
+    }
+    
+    
+</style> </head>
+<body>
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Login</h1>
+			</div>
+
+			<form class='form-signin', action='/login', method='POST'>
+				<input type='text', name='username' class='form-control', placeholder='Email',required, autofocus>
+				<input type='password', name='password' class='form-control', placeholder='Password', required>     
+        <button class='btn btn-lg btn-primary btn-block', type='submit'>login</button></form> 
+        <div class = "app-title">Remember me</div>
+				<input type='checkbox', name='remember' placeholder='Remember me'> 
+       
+		</div>
+	</div>
+</body>
