@@ -1,24 +1,34 @@
 <html>
-    <head>
-        <title>Client</title>
-    </head>
-    <body>
-        <img src="">
-        <script>
-            const img = document.querySelector('img');
-            const WS_URL = 'ws:///machineapijs.herokuapp.com';
-            //const WS_URL = "ws:///10.0.0.104:8000";
-            const ws = new WebSocket(WS_URL);
-            let urlObject;
-            ws.onopen = () => console.log(`Connected to ${WS_URL}`);
-            ws.onmessage = message => {
-                const arrayBuffer = message.data;
-                if(urlObject){
-                    URL.revokeObjectURL(urlObject);
-                }
-                urlObject = URL.createObjectURL(new Blob([arrayBuffer]));
-                img.src = urlObject;
+
+<head>
+    <title>Client</title>
+</head>
+
+<body>
+    <img src="">
+    <script>
+        const img = document.querySelector('img');
+        const WS_URL = 'ws:///machineapijs.herokuapp.com';
+        //const WS_URL = "ws:///10.0.0.104:8000";
+        reconnect(function (stream) {
+            stream.on('data', function (data) { console.log(data.toString()) });
+            // => yup, I'm up!
+        }).on('reconnect', function (n, delay) {
+            console.log('reconnect to server', n, delay);
+        }).connect(WS_URL);
+        const ws = new WebSocket(WS_URL);
+        let urlObject;
+        ws.onopen = () => console.log(`Connected to ${WS_URL}`);
+        ws.onmessage = message => {
+            const arrayBuffer = message.data;
+            if (urlObject) {
+                URL.revokeObjectURL(urlObject);
             }
-        </script>
-    </body>
+            urlObject = URL.createObjectURL(new Blob([arrayBuffer]));
+            img.src = urlObject;
+        }
+      
+    </script>
+</body>
+
 </html>
