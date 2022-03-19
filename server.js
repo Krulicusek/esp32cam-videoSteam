@@ -6,7 +6,7 @@ const WebSocket = require("ws");
 
 let server = require('http').createServer(function (req, res) {
     var credentials = auth(req)    
-    if (!credentials || credentials.name !== 'admin' || credentials.pass !== 'secret') {
+    if (!credentials || credentials.name !== 'kathriiss' || credentials.pass !== 'metalika554') {
      res.statusCode = 401
      res.setHeader('WWW-Authenticate', 'Basic realm="example"')
      res.end('Access denied')
