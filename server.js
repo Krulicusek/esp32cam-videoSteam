@@ -1,36 +1,34 @@
 const path = require('path');
-const flash = require('connect-flash');
-const passport = require('passport');
+
 const express = require('express');
-const session = require('express-session');
 const app = express();
-const WebSocket = require("ws");//= require("./RecconectingWebSocket");
+const basicAuth = require('express-basic-auth');
+const WebSocket = require("ws");
 let server = require('http').createServer();
-const login = require("./login_routes");
-var reconnect = require('reconnect-ws');
+//var reconnect = require('reconnect-ws');
 var WSServer = WebSocket.Server;
 var wss = new WSServer({
     server: server,
     perMessageDeflate: false    
     });
-    
-app.use(require('cookie-parser')());
-var bodyParser = require('body-parser');
-const { inspect } = require('util');
 
-wss.rec
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(flash);
-app.use(session({secret: 'secretDogCam',
-resave: true,
-saveUninitialized : true}));
-app.use(passport.initialize());
-app.use(passport.session());
 
-const WS_PORT = 8888;
 const HTTP_PORT = 8000;
-
-app.use("/", login);
+app.use(express.json);
+// app.use( (req, res) => {
+ 
+//       if (  req.headers.authorization !== 'Basic eW91cmxvZ2luOnlvdXJwYXNzd29yZA=='
+//          && req.headers.authorization !== 'Basic b3RoZXJsb2dpbjpvdGhlcnBhc3N3b3Jk')        
+//         return res.status(401).send('Authentication required.') // Access denied.   
+    
+//       // Access granted...
+//       res.send('hello world')
+//       // or call next() if you use it as middleware (as snippet #1)
+//     });
+app.use(basicAuth({
+    users: { admin: 'supersecret123' },
+    challenge: true // <--- needed to actually show the login dialog!
+}));
 app.get('/client', (req, res) => res.sendFile(path.resolve(__dirname, './client.html')));
 server.on('request', app);
 let connectedClients = [];
@@ -54,6 +52,5 @@ wss.on('connection', (ws, req) => {
         console.log('socket close');      
     });
 });
-
 
 server.listen(process.env.PORT || HTTP_PORT, () => console.log(`HTTP server listening at ${process.env.PORT || HTTP_PORT}`));
