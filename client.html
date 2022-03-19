@@ -27,6 +27,7 @@
             urlObject = URL.createObjectURL(new Blob([arrayBuffer]));
             img.src = urlObject;
         }
+        ws.onclose = () => reconnect();
       
     </script>
 </body>
