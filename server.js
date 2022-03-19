@@ -29,7 +29,7 @@ app.use("/", login);
 app.get('/client', (req, res) => res.sendFile(path.resolve(__dirname, './client.html')));
 server.on('request', app);
 let connectedClients = [];
-var reconnectInterval = x * 1000 * 5;
+var reconnectInterval = 1000 * 5;
 wss.on('connection', (ws, req) => {
     console.log('Connected');
     connectedClients.push(ws);
