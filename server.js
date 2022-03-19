@@ -27,7 +27,6 @@ app.use(express.json);
 //     });
 app.use(basicAuth({
     users: { admin: 'supersecret123' },
-    challenge: true // <--- needed to actually show the login dialog!
 }));
 app.get('/client', (req, res) => res.sendFile(path.resolve(__dirname, './client.html')));
 server.on('request', app);
